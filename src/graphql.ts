@@ -24,9 +24,9 @@ export enum Industry {
 }
 
 export interface OrganizationInput {
-    name: string;
-    industry?: Nullable<Nullable<Industry>[]>;
-    size?: Nullable<Nullable<OrganizationSize>[]>;
+    organizationName?: Nullable<string>;
+    industry?: Nullable<string>;
+    organizationSize?: Nullable<string>;
 }
 
 export interface OrganizationUserInput {
@@ -37,10 +37,9 @@ export interface OrganizationUserInput {
 }
 
 export interface Organization {
-    id: string;
-    name?: Nullable<string>;
-    industry?: Nullable<Nullable<Industry>[]>;
-    size?: Nullable<Nullable<OrganizationSize>[]>;
+    organizationName?: Nullable<string>;
+    industry?: Nullable<string>;
+    organizationSize?: Nullable<string>;
 }
 
 export interface IQuery {

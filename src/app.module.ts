@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
@@ -7,19 +8,20 @@ import { Organization } from './entity/organization.entity';
 import { OrganizationModule } from './organization/organization.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot({
-    keepConnectionAlive: true,
-    type: 'postgres',
-    host: 'localhost',
-    port: 5432,
-    username: 'postgres',
-    password: 'password',
-    database: 'postgres',
-    synchronize: true,
-    logging: true,
-    entities: [Organization, OrganizationUser],
-  }),OrganizationModule
-],
+  imports: [
+    TypeOrmModule.forRoot({
+      type: 'postgres',
+      host: 'localhost',
+      port: 5432,
+      username: 'postgres',
+      password: '164116',
+      database: 'postgres',
+      synchronize: true,
+      logging: true,
+      entities: [OrganizationUser,Organization],
+    }),
+    OrganizationModule,
+  ],
   controllers: [],
   providers: [],
 })

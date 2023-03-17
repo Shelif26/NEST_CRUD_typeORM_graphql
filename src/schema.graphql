@@ -14,16 +14,15 @@ enum Industry {
 }
 
 input OrganizationInput {
-  name: String!
-  industry: [Industry]
-  size: [OrganizationSize]
+  organizationName: String
+  industry: String
+  organizationSize: String
 }
 
 type Organization {
-    id: ID!
-  name: String
-  industry: [Industry]
-  size: [OrganizationSize]
+  organizationName: String
+  industry: String
+  organizationSize: String
 }
 
 input OrganizationUserInput {
