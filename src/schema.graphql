@@ -1,0 +1,41 @@
+enum OrganizationSize {
+  SMALL
+  MEDIUM
+  LARGE
+}
+
+enum Industry {
+  HEALTHCARE
+  AGRICULTURE
+  AUTOMOBILE
+  BANKING
+  CONSTRUCTION
+  EDUCATION
+}
+
+input OrganizationInput {
+  name: String!
+  industry: [Industry!]!
+  size: [OrganizationSize]
+}
+
+type Organization {
+  name: String
+  industry: [Industry]
+  size: [OrganizationSize]
+}
+
+input OrganizationUserInput {
+  FirstName: String!
+  LastName: String!
+  Email: String!
+  Phone: String
+}
+
+type Query {
+  getOrganizations: [Organization]
+}
+
+type Mutation {
+  createOrganization(input: OrganizationInput): Organization
+}
