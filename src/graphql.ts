@@ -25,7 +25,7 @@ export enum Industry {
 
 export interface OrganizationInput {
     name: string;
-    industry: Industry[];
+    industry?: Nullable<Nullable<Industry>[]>;
     size?: Nullable<Nullable<OrganizationSize>[]>;
 }
 
@@ -37,6 +37,7 @@ export interface OrganizationUserInput {
 }
 
 export interface Organization {
+    id: string;
     name?: Nullable<string>;
     industry?: Nullable<Nullable<Industry>[]>;
     size?: Nullable<Nullable<OrganizationSize>[]>;
