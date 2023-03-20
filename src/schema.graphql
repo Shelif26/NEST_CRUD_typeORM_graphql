@@ -32,10 +32,19 @@ input OrganizationUserInput {
   Phone: String
 }
 
+input UpdateOrganizationInput {
+  organizationName: String
+  industry: String
+  organizationSize: String
+}
+
 type Query {
   getOrganizations: [Organization]
+  getOrganizationByName(id:Int): Organization
 }
 
 type Mutation {
   createOrganization(input: OrganizationInput): Organization
+  updateOrganization(input: UpdateOrganizationInput): Organization
+  deleteOrganization(id:Int): String!
 }
