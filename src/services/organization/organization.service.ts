@@ -16,11 +16,14 @@ export class organizationService {
     return await this.orgRepository.find();
   }
 
-  async getOrganizationByName(id: number): Promise<Organization> {
+  async getOrganizationById(id: number): Promise<Organization | string> {
     const organization = await this.orgRepository.findOne({
       where: { id: id },
     });
-    console.log(organization);
+
+    if (!organization) {
+      return `Organization : ${id} not found in the DB`;
+    }
     return organization;
   }
 
@@ -29,15 +32,16 @@ export class organizationService {
     return createUser;
   }
 
-  async updateOrganization(
-    input: updateOrganizationType,
-  ): Promise<Organization> {
+  async updateOrganization(input: updateOrganizationType): Promise<Organization | string> {
     const existingRecord = await this.orgRepository.findOne({
       where: { organizationName: input.organizationName },
     });
+
+    if (!existingRecord) {
+      return `Organization : ${input.organizationName} not found in the DB`;
+    }
     existingRecord.industry = input.industry ?? existingRecord.industry;
-    existingRecord.organizationSize =
-      input.organizationSize ?? existingRecord.organizationSize;
+    existingRecord.organizationSize = input.organizationSize ?? existingRecord.organizationSize;
 
     const updatedRecord = await this.orgRepository.save(existingRecord);
     return updatedRecord;
@@ -55,5 +59,33 @@ export class organizationService {
     await this.orgRepository.delete(organization);
 
     return `Organization with id : ${id} has been successfully deleted`;
+  }
+
+  async softDeleteOrganization(id: number): Promise<string> {
+    const Soft_delete = await this.orgRepository.findOne({
+      where: { id: id },
+    });
+
+    if (!Soft_delete) {
+      return `Organization with id:${id} not found`;
+    }
+
+    await this.orgRepository.softDelete(Soft_delete);
+
+    return `Organization with id:${id} is been softDeleted, you can restore it anytime`;
+  }
+
+  async restoreSoftDeletedOrganization(id: number): Promise<string> {
+    const resotreOrg = await this.orgRepository.findOne({
+      where: { id: id },
+    });
+
+    if (!resotreOrg) {
+      return `Organization with id:${id} not found`;
+    }
+
+    await this.orgRepository.restore(id)
+
+    return `Organization with id:${id} is been restored`
   }
 }

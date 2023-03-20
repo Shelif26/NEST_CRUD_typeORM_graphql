@@ -1,6 +1,12 @@
-/* eslint-disable prettier/prettier */
-import { Industry, OrganizationSize } from 'src/enum/organization';
-import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  OneToMany,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+} from 'typeorm';
 import { OrganizationUser } from './organization-user.entity';
 
 @Entity()
@@ -17,6 +23,18 @@ export class Organization {
   @Column('varchar', { name: 'organization_size', length: 100 })
   organizationSize: string;
 
-  @OneToMany(() => OrganizationUser, (organizationUser) => organizationUser.id)
+  @OneToMany(
+    () => OrganizationUser,
+    (organizationUser) => organizationUser.organization,
+  )
   organizationUser: OrganizationUser[];
+
+  @CreateDateColumn({ name: 'created_timestamp', nullable: false })
+  createdTimestamp?: Date;
+
+  @UpdateDateColumn({ name: 'updated_timestamp', nullable: false })
+  updatedTimestamp?: Date;
+
+  @DeleteDateColumn({ name: 'deleted_timestamp', nullable: false })
+  deletedTimestamp?: Date;
 }

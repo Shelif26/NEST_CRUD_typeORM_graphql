@@ -2,7 +2,7 @@
 import { Args, Query, Mutation, Resolver } from '@nestjs/graphql';
 import { organizationType, updateOrganizationType } from 'src/dto/organization';
 import { Organization } from 'src/entity/organization.entity';
-import { organizationService } from '../services/organization/organization.user.service';
+import { organizationService } from '../services/organization/organization.service';
 
 @Resolver('Organization')
 export class OrganizationResolver {
@@ -13,8 +13,8 @@ export class OrganizationResolver {
   }
 
   @Query()
-  getOrganizationByName(@Args('id') id: number): Promise<Organization> {
-    return this.OrganizationService.getOrganizationByName(id);
+  getOrganizationById(@Args('id') id: number): Promise<Organization | string> {
+    return this.OrganizationService.getOrganizationById(id);
   }
 
   @Mutation()
@@ -31,4 +31,15 @@ export class OrganizationResolver {
   deleteOrganization(@Args('id') id: number): Promise<string> {
     return this.OrganizationService.deleteOrganization(id);
   }
+
+  @Mutation()
+  softDeleteOrganization(@Args('id') id: number):Promise<string>{
+    return this.OrganizationService.softDeleteOrganization(id)
+  }
+
+  @Mutation()
+  restoreSoftdeletedOrg(@Args('id') id: number):Promise<string>{
+    return this.OrganizationService.softDeleteOrganization(id)
+  }
+
 }

@@ -1,11 +1,10 @@
 /* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { OrganizationUser } from './entity/organization-user.entity';
 import { Organization } from './entity/organization.entity';
-import { OrganizationModule } from './organization/organization.module';
+import { OrganizationModule } from './modules/organization/organization.module';
+import { userModule } from './modules/users/users.module';
 
 @Module({
   imports: [
@@ -21,6 +20,7 @@ import { OrganizationModule } from './organization/organization.module';
       entities: [OrganizationUser, Organization],
     }),
     OrganizationModule,
+    userModule
   ],
   controllers: [],
   providers: [],

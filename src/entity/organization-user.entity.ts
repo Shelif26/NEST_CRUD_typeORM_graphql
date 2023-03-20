@@ -1,4 +1,12 @@
-import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
+import {
+  Entity,
+  Column,
+  PrimaryGeneratedColumn,
+  ManyToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
+  DeleteDateColumn,
+} from 'typeorm';
 import { Organization } from './organization.entity';
 
 @Entity()
@@ -18,6 +26,15 @@ export class OrganizationUser {
   @Column('varchar', { name: 'phone_number', length: 100 })
   phonenumber?: string;
 
-  @ManyToOne((type) => Organization, (organization) => organization.id)
+  @ManyToOne(() => Organization, (organization) => organization.id)
   organization: Organization;
+
+  @CreateDateColumn({ name: 'created_timestamp', nullable: false })
+  createdTimestamp?: Date;
+
+  @UpdateDateColumn({ name: 'updated_timestamp', nullable: false })
+  updatedTimestamp?: Date;
+
+  @DeleteDateColumn({ name: 'deleted_timestamp', nullable: false })
+  deletedTimestamp?: Date;
 }
