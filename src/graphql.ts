@@ -44,8 +44,8 @@ export interface UpdateOrganizationInput {
 
 export interface Organization {
     organizationName?: Nullable<string>;
-    industry?: Nullable<Nullable<Industry>[]>;
-    organizationSize?: Nullable<Nullable<OrganizationSize>[]>;
+    industry?: Nullable<Industry>;
+    organizationSize?: Nullable<OrganizationSize>;
 }
 
 export interface OrganizationUser {
