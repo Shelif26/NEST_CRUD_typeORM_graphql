@@ -31,6 +31,7 @@ export class organizationService {
     if (!organization) {
       return `Organization : ${id} not found in the DB`;
     }
+
     return organization;
   }
 
