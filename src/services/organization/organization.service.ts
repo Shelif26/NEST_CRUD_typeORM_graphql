@@ -3,13 +3,17 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Organization } from 'src/entity/organization.entity';
-import { organizationType, updateOrganizationType } from 'src/dto/organization';
+import { OrganizationUser } from 'src/entity/organization-user.entity';
+import { organizationReturn, organizationType, updateOrganizationType } from 'src/dto/organization';
+import { pick } from 'lodash';
 
 @Injectable()
 export class organizationService {
   constructor(
     @InjectRepository(Organization)
     private readonly orgRepository: Repository<Organization>,
+    @InjectRepository(OrganizationUser)
+    private readonly userRepository: Repository<OrganizationUser>,
   ) {}
 
   async getOrganization(): Promise<Organization[]> {
@@ -27,8 +31,18 @@ export class organizationService {
     return organization;
   }
 
-  async createOrganization(input: organizationType): Promise<Organization> {
-    const createUser = await this.orgRepository.save(input);
+  async createOrganization(input: organizationType): Promise<Organization | string> {
+    const existingRecord = await this.userRepository.findOne({ where: { id: input.mpi } });
+
+    if (!existingRecord) {
+      return `user :${input.mpi} not found`;
+    }
+
+    const createUser = await this.orgRepository.save({
+      ...pick(input, ['organizationName', 'industry', 'organizationSize', 'mpi']),
+      user: existingRecord,
+    });
+
     return createUser;
   }
 
@@ -40,10 +54,12 @@ export class organizationService {
     if (!existingRecord) {
       return `Organization : ${input.organizationName} not found in the DB`;
     }
+
     existingRecord.industry = input.industry ?? existingRecord.industry;
     existingRecord.organizationSize = input.organizationSize ?? existingRecord.organizationSize;
 
     const updatedRecord = await this.orgRepository.save(existingRecord);
+
     return updatedRecord;
   }
 
@@ -76,16 +92,8 @@ export class organizationService {
   }
 
   async restoreSoftDeletedOrganization(id: number): Promise<string> {
-    const resotreOrg = await this.orgRepository.findOne({
-      where: { id: id },
-    });
+    const resotreOrg = await this.orgRepository.restore({ id: id });
 
-    if (!resotreOrg) {
-      return `Organization with id:${id} not found`;
-    }
-
-    await this.orgRepository.restore(id)
-
-    return `Organization with id:${id} is been restored`
+    return `Organization with id:${id} is been restored`;
   }
 }

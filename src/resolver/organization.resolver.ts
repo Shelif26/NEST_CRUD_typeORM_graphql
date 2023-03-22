@@ -39,7 +39,7 @@ export class OrganizationResolver {
 
   @Mutation()
   restoreSoftdeletedOrg(@Args('id') id: number):Promise<string>{
-    return this.OrganizationService.softDeleteOrganization(id)
+    return this.OrganizationService.restoreSoftDeletedOrganization(id)
   }
 
 }

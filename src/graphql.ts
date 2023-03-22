@@ -27,13 +27,14 @@ export interface OrganizationInput {
     organizationName?: Nullable<string>;
     industry?: Nullable<Industry>;
     organizationSize?: Nullable<OrganizationSize>;
+    mpi?: Nullable<number>;
 }
 
 export interface OrganizationUserInput {
-    FirstName: string;
-    LastName: string;
-    Email: string;
-    Phone?: Nullable<string>;
+    firstName?: Nullable<string>;
+    lastName?: Nullable<string>;
+    email?: Nullable<string>;
+    phonenumber?: Nullable<string>;
 }
 
 export interface UpdateOrganizationInput {
@@ -46,13 +47,14 @@ export interface Organization {
     organizationName?: Nullable<string>;
     industry?: Nullable<Industry>;
     organizationSize?: Nullable<OrganizationSize>;
+    user?: Nullable<OrganizationUser>;
 }
 
 export interface OrganizationUser {
-    FirstName: string;
-    LastName: string;
-    Email: string;
-    Phone?: Nullable<string>;
+    firstName?: Nullable<string>;
+    lastName?: Nullable<string>;
+    email?: Nullable<string>;
+    phonenumber?: Nullable<string>;
 }
 
 export interface IQuery {
@@ -63,6 +65,7 @@ export interface IQuery {
 
 export interface IMutation {
     createOrganization(input?: Nullable<OrganizationInput>): Nullable<Organization> | Promise<Nullable<Organization>>;
+    createUser(input?: Nullable<OrganizationUserInput>): Nullable<OrganizationUser> | Promise<Nullable<OrganizationUser>>;
     updateOrganization(input?: Nullable<UpdateOrganizationInput>): Nullable<Organization> | Promise<Nullable<Organization>>;
     deleteOrganization(id?: Nullable<number>): string | Promise<string>;
     softDeleteOrganization(id?: Nullable<number>): string | Promise<string>;

@@ -2,10 +2,10 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
+  OneToMany,
 } from 'typeorm';
 import { Organization } from './organization.entity';
 
@@ -25,9 +25,6 @@ export class OrganizationUser {
 
   @Column('varchar', { name: 'phone_number', length: 100 })
   phonenumber?: string;
-
-  @ManyToOne(() => Organization, (organization) => organization.id)
-  organization: Organization;
 
   @CreateDateColumn({ name: 'created_timestamp', nullable: false })
   createdTimestamp?: Date;

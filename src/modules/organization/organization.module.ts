@@ -8,9 +8,11 @@ import {} from '../../resolver/organization.resolver';
 import { join } from 'path';
 import { organizationService } from '../../services/organization/organization.service';
 import { OrganizationResolver } from '../../resolver/organization.resolver';
+import { OrganizationUser } from 'src/entity/organization-user.entity';
 
 @Module({
   imports: [
+    TypeOrmModule.forFeature([Organization, OrganizationUser]),
     GraphQLModule.forRoot({
       driver: ApolloDriver,
       playground: true,
@@ -19,7 +21,6 @@ import { OrganizationResolver } from '../../resolver/organization.resolver';
         path: join(process.cwd(), 'src/graphql.ts'),
       },
     }),
-    TypeOrmModule.forFeature([Organization]),
   ],
   controllers: [],
   providers: [OrganizationResolver, organizationService],

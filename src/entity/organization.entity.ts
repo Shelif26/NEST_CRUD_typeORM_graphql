@@ -2,10 +2,11 @@ import {
   Entity,
   Column,
   PrimaryGeneratedColumn,
-  OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
 import { OrganizationUser } from './organization-user.entity';
 
@@ -23,11 +24,9 @@ export class Organization {
   @Column('varchar', { name: 'organization_size', length: 100 })
   organizationSize: string;
 
-  @OneToMany(
-    () => OrganizationUser,
-    (organizationUser) => organizationUser.organization,
-  )
-  organizationUser: OrganizationUser[];
+  @ManyToOne(() => OrganizationUser, { onDelete: 'RESTRICT', nullable: true, eager: true })
+  @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
+  mpi: OrganizationUser;
 
   @CreateDateColumn({ name: 'created_timestamp', nullable: false })
   createdTimestamp?: Date;

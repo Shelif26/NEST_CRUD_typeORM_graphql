@@ -17,26 +17,28 @@ input OrganizationInput {
   organizationName: String
   industry: Industry
   organizationSize: OrganizationSize
+  mpi: Int
 }
 
 type Organization {
   organizationName: String
   industry: Industry
   organizationSize: OrganizationSize
+  user: OrganizationUser
 }
 
 input OrganizationUserInput {
-  FirstName: String!
-  LastName: String!
-  Email: String!
-  Phone: String
+  firstName: String
+  lastName: String
+  email: String
+  phonenumber: String
 }
 
 type OrganizationUser {
-  FirstName: String!
-  LastName: String!
-  Email: String!
-  Phone: String
+  firstName: String
+  lastName: String
+  email: String
+  phonenumber: String
 }
 
 input UpdateOrganizationInput {
@@ -53,6 +55,7 @@ type Query {
 
 type Mutation {
   createOrganization(input: OrganizationInput): Organization
+  createUser(input: OrganizationUserInput): OrganizationUser
   updateOrganization(input: UpdateOrganizationInput): Organization
   deleteOrganization(id: Int): String!
   softDeleteOrganization(id: Int): String!

@@ -1,9 +1,23 @@
 /* eslint-disable prettier/prettier */
 
+import { Industry, OrganizationSize } from 'src/enum/organization';
+
 export type organizationType = {
   organizationName: string;
   industry: Industry;
   organizationSize: OrganizationSize;
+  mpi: number;
+};
+
+export type organizationReturn = {
+  organizationName: string;
+  industry: Industry;
+  organizationSize: OrganizationSize;
+  mpi: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phonenumber: string;
 };
 
 export type updateOrganizationType = {
@@ -11,18 +25,3 @@ export type updateOrganizationType = {
   industry: Industry;
   organizationSize: OrganizationSize;
 };
-
-export enum Industry  {
-  HEALTHCARE = "HEALTHCARE",
-  AGRICULTURE = "AGRICULTURE",
-  AUTOMOBILE = "AUTOMOBILE",
-  BANKING = "BANKING",
-  CONSTRUCTION  = "CONSTRUCTION",
-  EDUCATION = 'EDUCATION',
-}
-
-export enum OrganizationSize {
-  SMALL = "SMALL",
-  MEDIUM = "MEDIUM",
-  LARGE = "LARGE",
-}
