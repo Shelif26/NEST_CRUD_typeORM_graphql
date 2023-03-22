@@ -1,11 +1,12 @@
 /* eslint-disable prettier/prettier */
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { OrganizationUser } from './entity/organization-user.entity';
+import { User } from './entity/user.entity';
 import { Organization } from './entity/organization.entity';
 import { OrganizationModule } from './modules/organization/organization.module';
 import { userModule } from './modules/users/users.module';
 import * as dotenv from 'dotenv';
+import { userOrganization } from './entity/user_organization.entity';
 
 dotenv.config();
 
@@ -20,7 +21,7 @@ dotenv.config();
       database: process.env.DB,
       synchronize: true,
       logging: true,
-      entities: [OrganizationUser, Organization],
+      entities: [User, Organization, userOrganization],
     }),
     OrganizationModule,
     userModule,

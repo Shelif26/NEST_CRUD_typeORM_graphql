@@ -6,7 +6,7 @@ export type organizationType = {
   organizationName: string;
   industry: Industry;
   organizationSize: OrganizationSize;
-  mpi: number;
+  email: string;
 };
 
 export type organizationReturn = {

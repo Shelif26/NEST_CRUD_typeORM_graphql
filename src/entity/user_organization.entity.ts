@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 import {
   Entity,
-  Column,
   PrimaryGeneratedColumn,
   CreateDateColumn,
   UpdateDateColumn,
@@ -9,23 +8,19 @@ import {
   ManyToOne,
   JoinColumn,
 } from 'typeorm';
+import { Organization } from './organization.entity';
 import { User } from './user.entity';
 
 @Entity()
-export class Organization {
+export class userOrganization {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('varchar', { name: 'organization_name', length: 100, unique: true})
-  organizationName!: string;
+  @ManyToOne(() => Organization, (organization) => organization.organizationName, { onDelete: 'CASCADE',nullable: false,eager:true})
+  @JoinColumn({ name: 'organization_name', referencedColumnName: 'organizationName' })
+  organizationName: Organization;
 
-  @Column('varchar', { name: 'industry', length: 100 })
-  industry!: string;
-
-  @Column('varchar', { name: 'organization_size', length: 100 })
-  organizationSize?: string;
-
-  @ManyToOne(() => User,(User) => User.email, { onDelete: 'RESTRICT', nullable: true, eager: true })
+  @ManyToOne(() => User, (User) => User.email, { onDelete: 'CASCADE',nullable: false,eager:true})
   @JoinColumn({ name: 'user_email', referencedColumnName: 'email' })
   email: User;
 

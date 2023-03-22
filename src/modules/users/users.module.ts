@@ -3,10 +3,10 @@ import { Module } from '@nestjs/common';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver } from '@nestjs/apollo';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { OrganizationUser } from '../../entity/organization-user.entity';
+import { User } from '../../entity/user.entity';
 import {} from '../../resolver/organization.resolver';
 import { join } from 'path';
-import { organizationUserService } from 'src/services/user/user.service';
+import { userService } from 'src/services/user/user.service';
 import { OrganizationUserResolver } from 'src/resolver/user.resolver';
 
 @Module({
@@ -19,9 +19,9 @@ import { OrganizationUserResolver } from 'src/resolver/user.resolver';
         path: join(process.cwd(), 'src/graphql.ts'),
       },
     }),
-    TypeOrmModule.forFeature([OrganizationUser]),
+    TypeOrmModule.forFeature([User]),
   ],
   controllers: [],
-  providers: [OrganizationUserResolver, organizationUserService],
+  providers: [OrganizationUserResolver, userService],
 })
 export class userModule {}

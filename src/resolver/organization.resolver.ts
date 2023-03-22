@@ -9,7 +9,7 @@ export class OrganizationResolver {
   constructor(private readonly OrganizationService: organizationService) {}
   @Query()
   getOrganizations(): Promise<Organization[]> {
-    return this.OrganizationService.getOrganization();
+    return this.OrganizationService.getOrganizations();
   }
 
   @Query()
@@ -33,13 +33,12 @@ export class OrganizationResolver {
   }
 
   @Mutation()
-  softDeleteOrganization(@Args('id') id: number):Promise<string>{
-    return this.OrganizationService.softDeleteOrganization(id)
+  softDeleteOrganization(@Args('id') id: number): Promise<string> {
+    return this.OrganizationService.softDeleteOrganization(id);
   }
 
   @Mutation()
-  restoreSoftdeletedOrg(@Args('id') id: number):Promise<string>{
-    return this.OrganizationService.restoreSoftDeletedOrganization(id)
+  restoreSoftdeletedOrg(@Args('id') id: number): Promise<string> {
+    return this.OrganizationService.restoreSoftDeletedOrganization(id);
   }
-
 }

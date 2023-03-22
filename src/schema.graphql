@@ -17,24 +17,24 @@ input OrganizationInput {
   organizationName: String
   industry: Industry
   organizationSize: OrganizationSize
-  mpi: Int
+  email: String
 }
 
 type Organization {
   organizationName: String
   industry: Industry
   organizationSize: OrganizationSize
-  user: OrganizationUser
+  user: User
 }
 
-input OrganizationUserInput {
+input UserInput {
   firstName: String
   lastName: String
   email: String
   phonenumber: String
 }
 
-type OrganizationUser {
+type User {
   firstName: String
   lastName: String
   email: String
@@ -50,12 +50,12 @@ input UpdateOrganizationInput {
 type Query {
   getOrganizations: [Organization]
   getOrganizationById(id: Int): Organization
-  getOrganizationUsers: [OrganizationUser]
+  getOrganizationUsers: [User]
 }
 
 type Mutation {
   createOrganization(input: OrganizationInput): Organization
-  createUser(input: OrganizationUserInput): OrganizationUser
+  createUser(input: UserInput): User
   updateOrganization(input: UpdateOrganizationInput): Organization
   deleteOrganization(id: Int): String!
   softDeleteOrganization(id: Int): String!

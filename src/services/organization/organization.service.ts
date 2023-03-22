@@ -3,20 +3,23 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Organization } from 'src/entity/organization.entity';
-import { OrganizationUser } from 'src/entity/organization-user.entity';
-import { organizationReturn, organizationType, updateOrganizationType } from 'src/dto/organization';
+import { User } from 'src/entity/user.entity';
+import { organizationType, updateOrganizationType } from 'src/dto/organization';
 import { pick } from 'lodash';
+import { userOrganization } from 'src/entity/user_organization.entity';
 
 @Injectable()
 export class organizationService {
   constructor(
     @InjectRepository(Organization)
-    private readonly orgRepository: Repository<Organization>,
-    @InjectRepository(OrganizationUser)
-    private readonly userRepository: Repository<OrganizationUser>,
+    private orgRepository: Repository<Organization>,
+    @InjectRepository(User)
+    private userRepository: Repository<User>,
+    @InjectRepository(userOrganization)
+    private userOrganizationRepository: Repository<userOrganization>,
   ) {}
 
-  async getOrganization(): Promise<Organization[]> {
+  async getOrganizations(): Promise<Organization[]> {
     return await this.orgRepository.find();
   }
 
@@ -32,16 +35,21 @@ export class organizationService {
   }
 
   async createOrganization(input: organizationType): Promise<Organization | string> {
-    const existingRecord = await this.userRepository.findOne({ where: { id: input.mpi } });
+    const existingRecord = await this.userRepository.findOne({ where: { email: input.email } });
 
     if (!existingRecord) {
-      return `user :${input.mpi} not found`;
+      return `user :${input.email} not found`;
     }
 
     const createUser = await this.orgRepository.save({
-      ...pick(input, ['organizationName', 'industry', 'organizationSize', 'mpi']),
+      ...pick(input, ['organizationName', 'industry', 'organizationSize', 'email']),
       user: existingRecord,
     });
+
+    const createUserOrganization = await this.userOrganizationRepository.save({
+      ...pick(input, ['organizationName', 'email']),
+    });
+    console.log(createUserOrganization);
 
     return createUser;
   }

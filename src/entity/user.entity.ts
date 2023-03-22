@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import {
   Entity,
   Column,
@@ -5,22 +6,20 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   DeleteDateColumn,
-  OneToMany,
 } from 'typeorm';
-import { Organization } from './organization.entity';
 
 @Entity()
-export class OrganizationUser {
+export class User {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column('varchar', { name: 'first_name', length: 100 })
+  @Column('varchar', { name: 'first_name', length: 100, unique: true, primary: true })
   firstName!: string;
 
   @Column('varchar', { name: 'last_name', length: 100 })
   lastName!: string;
 
-  @Column('varchar', { name: 'email', length: 100 })
+  @Column('varchar', { name: 'email', length: 100, unique: true })
   email!: string;
 
   @Column('varchar', { name: 'phone_number', length: 100 })

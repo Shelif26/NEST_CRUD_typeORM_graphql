@@ -8,11 +8,12 @@ import {} from '../../resolver/organization.resolver';
 import { join } from 'path';
 import { organizationService } from '../../services/organization/organization.service';
 import { OrganizationResolver } from '../../resolver/organization.resolver';
-import { OrganizationUser } from 'src/entity/organization-user.entity';
+import { User } from 'src/entity/user.entity';
+import { userOrganization } from 'src/entity/user_organization.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Organization, OrganizationUser]),
+    TypeOrmModule.forFeature([Organization, User, userOrganization]),
     GraphQLModule.forRoot({
       driver: ApolloDriver,
       playground: true,

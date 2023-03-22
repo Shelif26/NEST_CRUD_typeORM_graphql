@@ -27,10 +27,10 @@ export interface OrganizationInput {
     organizationName?: Nullable<string>;
     industry?: Nullable<Industry>;
     organizationSize?: Nullable<OrganizationSize>;
-    mpi?: Nullable<number>;
+    email?: Nullable<string>;
 }
 
-export interface OrganizationUserInput {
+export interface UserInput {
     firstName?: Nullable<string>;
     lastName?: Nullable<string>;
     email?: Nullable<string>;
@@ -47,10 +47,10 @@ export interface Organization {
     organizationName?: Nullable<string>;
     industry?: Nullable<Industry>;
     organizationSize?: Nullable<OrganizationSize>;
-    user?: Nullable<OrganizationUser>;
+    user?: Nullable<User>;
 }
 
-export interface OrganizationUser {
+export interface User {
     firstName?: Nullable<string>;
     lastName?: Nullable<string>;
     email?: Nullable<string>;
@@ -60,12 +60,12 @@ export interface OrganizationUser {
 export interface IQuery {
     getOrganizations(): Nullable<Nullable<Organization>[]> | Promise<Nullable<Nullable<Organization>[]>>;
     getOrganizationById(id?: Nullable<number>): Nullable<Organization> | Promise<Nullable<Organization>>;
-    getOrganizationUsers(): Nullable<Nullable<OrganizationUser>[]> | Promise<Nullable<Nullable<OrganizationUser>[]>>;
+    getOrganizationUsers(): Nullable<Nullable<User>[]> | Promise<Nullable<Nullable<User>[]>>;
 }
 
 export interface IMutation {
     createOrganization(input?: Nullable<OrganizationInput>): Nullable<Organization> | Promise<Nullable<Organization>>;
-    createUser(input?: Nullable<OrganizationUserInput>): Nullable<OrganizationUser> | Promise<Nullable<OrganizationUser>>;
+    createUser(input?: Nullable<UserInput>): Nullable<User> | Promise<Nullable<User>>;
     updateOrganization(input?: Nullable<UpdateOrganizationInput>): Nullable<Organization> | Promise<Nullable<Organization>>;
     deleteOrganization(id?: Nullable<number>): string | Promise<string>;
     softDeleteOrganization(id?: Nullable<number>): string | Promise<string>;
