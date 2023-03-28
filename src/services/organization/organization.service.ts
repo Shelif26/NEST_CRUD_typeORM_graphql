@@ -50,7 +50,6 @@ export class organizationService {
     const createUserOrganization = await this.userOrganizationRepository.save({
       ...pick(input, ['organizationName', 'email']),
     });
-    console.log(createUserOrganization);
 
     return createUser;
   }
